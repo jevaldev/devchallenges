@@ -126,11 +126,11 @@
         background-color: #35383f;
         border-radius: 8px;
         gap: 1rem;
-        width: min(500px, 100%); 
+        width: 300px;
+        max-width: 100%;
       }
 
       ul {
-        list-style: decimal;
         padding-inline: 1rem;
         padding-bottom: 0.5rem;
         width: 100%;
@@ -146,7 +146,6 @@
       }
 
       li {
-        list-style: decimal;
         display: flex;
         gap: 1rem;
         align-items: center;
@@ -156,6 +155,7 @@
         aspect-ratio: 1/1;
         width: 32px;
         height: 32px;
+        object-fit: contain;
       }
 
       h3 {
@@ -195,8 +195,8 @@
     <main>
       <section>
         <picture>
-          <img src="./resources/tails.svg" id="tails" class="" alt="Coin with the value of tails">
-          <img src="./resources/heads.svg" id="heads" class="hidden" alt="Coin with the value of heads">
+          <img style="aspect-ratio: 1/1;" src="./resources/tails.svg" id="tails" class="" alt="Coin with the value of tails" width="160" height="160">
+          <img style="aspect-ratio: 1/1;" src="./resources/heads.svg" id="heads" class="hidden" alt="Coin with the value of heads" width="160" height="160">
         </picture>
         <img src="./resources/shadow.svg" alt="">
         <h2 id="text-result">Tails</h2>
