@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="icon"
+      href="resources/favicon.ico"
+      type="image/x-icon"
+      sizes="96x96"
+    />
+
+    <title>Flip the coin | devChallenges.io</title>
+
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    </style>
+
+    <style>
+      .kanit-regular {
+        font-family: "Kanit", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+      }
+
+      .kanit-semibold {
+        font-family: "Kanit", sans-serif;
+        font-weight: 600;
+        font-style: normal;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Kanit";
+        font-size: 1.125rem;
+        height: 100svh;
+        background-color: #404A65;
+        color: #ECEDF0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        font-weight: 600;
+        gap: 2rem;
+        width: min(80ch, 100% - 2rem);
+        margin: auto;
+        padding-block: 2rem;
+      }
+
+      main {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3rem;
+      }
+
+
+      h1 {
+        font-size: 4rem;
+        text-shadow: 2px 2px 0px #35383f;
+        -webkit-text-stroke-width: 5px;
+        -webkit-text-stroke-color: #35383f;
+        text-align: center;
+        line-height: 110%;
+      }
+
+      h2 {
+        text-align: center;
+      }
+
+      .author-info {
+        font-size: 14px;
+        text-align: center;
+        margin-top: 16px;
+        color: #ECEDF0;
+      }
+
+      .author-info a {
+        color: #76c1fe;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 200ms ease-in;
+      }
+
+      .author-info a:hover {
+        text-decoration: underline;
+        color: #5fa3da;
+      }
+
+      button {
+        background-color: #1F6FB0;
+        font: inherit;
+        padding-inline: 3rem;
+        padding-block: 1rem;
+        font-size: 1.25rem;
+        color: #ECEDF0;
+        text-transform: uppercase;
+        border: 0px transparent;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 250ms ease-in;
+      }
+
+      button:hover {
+        background-color: #1b5f97;
+        transform: scale(105%);
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .results {
+        background-color: #35383f;
+        border-radius: 8px;
+        gap: 1rem;
+        width: min(500px, 100%); 
+      }
+
+      ul {
+        list-style: decimal;
+        padding-inline: 1rem;
+        padding-bottom: 0.5rem;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        height: 200px;
+        overflow-x: scroll;
+      }
+      
+      li:first-child {
+        border: 2px solid #1F6FB0;
+      }
+
+      li {
+        list-style: decimal;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+      }
+
+      li > img {
+        aspect-ratio: 1/1;
+        width: 32px;
+        height: 32px;
+      }
+
+      h3 {
+        border-bottom: 2px solid #ECEDF0;
+        width: 100%;
+        padding-inline: 1rem;
+        padding-block: 0.5rem;
+      }
+
+      .footer-score {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+        border-top: 2px solid #ECEDF0;
+        padding-block: 0.5rem;
+      }
+
+      .score {
+        display: flex;
+        gap: 0.5rem;
+
+        > img {
+          aspect-ratio: 1/1;
+          width: 24px;
+        }
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <header>
+      <h1>Flip a Coin Game</h1>
+      <h2>Press the button to flip the coin</h2>
+    </header>
+
+    <main>
+      <section>
+        <picture>
+          <img src="./resources/tails.svg" id="tails" class="" alt="Coin with the value of tails">
+          <img src="./resources/heads.svg" id="heads" class="hidden" alt="Coin with the value of heads">
+        </picture>
+        <img src="./resources/shadow.svg" alt="">
+        <h2 id="text-result">Tails</h2>
+        <button id="coin-flip">Flip the coin</button>
+      </section>
+      <section class="results">
+        <h3>Results:</h3>
+        <ul id="result-list">
+          <li>You haven't play a game yet. :(</li>
+        </ul>
+        <footer class="footer-score">
+          <div class="score">
+            <img src="./resources/tails.svg" alt="Coin with the value of tails" title="Tails">
+            : <p id="tails-counter">0</p>
+          </div>
+          <div class="score">
+            <img src="./resources/heads.svg" alt="Coin with the value of heads" title="Heads">
+            : <p id="heads-counter">0</p>
+          </div>
+        </footer>
+      </section>
+    </main>
+
+    <footer class="author-info">
+      Coded by <a href="#">Your Name Here</a> | Challenge by
+      <a href="https://www.devchallenges.io?ref=challenge" target="_blank"
+        >devChallenges.io</a
+      >.
+    </footer>
+
+    <script>
+      const button = document.getElementById("coin-flip")
+      const tails = document.getElementById("tails")
+      const heads = document.getElementById("heads")
+      const text = document.getElementById("text-result")
+      const resultList = document.getElementById("result-list")
+      const tailsTextCounter = document.getElementById("tails-counter")
+      const headTextCounter = document.getElementById("heads-counter")
+      let tailsCounter = 0
+      let headsCounter = 0
+      
+      button.addEventListener("click", () => {
+        const result = Math.random() < 0.5 ? "Heads" : "Tails";
+        result === "Heads" ? headsCounter++ : tailsCounter++; 
+
+        text.innerHTML = result;
+
+        const firstItem = resultList.querySelector("li")
+        if( firstItem && firstItem.textContent.includes("You haven't play")){
+          resultList.removeChild(firstItem);
+        }
+
+        if (result === "Heads") {
+          heads.classList.remove("hidden")
+          tails.classList.add("hidden")
+          headTextCounter.innerText = headsCounter
+        } else {
+          tails.classList.remove("hidden")
+          heads.classList.add("hidden")
+          tailsTextCounter.innerText = tailsCounter
+        }
+
+        const li = document.createElement("li")
+        const img = document.createElement("img")
+        const small = document.createElement("small")
+
+        img.src = result === "Heads" ? "./resources/heads.svg" : "./resources/tails.svg"
+        img.alt = result
+        small.innerHTML = result
+
+        li.appendChild(img)
+        li.appendChild(small)
+
+        resultList.insertBefore(li, resultList.firstChild)
+      })
+    </script>
+  </body>
+</html>
