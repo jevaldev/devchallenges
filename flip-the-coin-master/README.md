@@ -6,11 +6,11 @@
 
 <div align="center">
   <h3>
-    <a href="{https://your-demo-link.your-domain}">
+    <a href="https://heroic-kataifi-8ce074.netlify.app/">
       Demo
     </a>
     <span> | </span>
-    <a href="{https://your-url-to-the-solution}">
+    <a href="https://github.com/jevaldev/devchallenges/tree/master/flip-the-coin-master">
       Solution
     </a>
     <span> | </span>
@@ -75,5 +75,5 @@ This challenge helped me refresh several core vanilla JavaScript concepts I hadn
 
 ## Author
 
-- Website [your-website.com](www.linkedin.com/in/jesus-valdes-viramontes)
-- GitHub [@your-username](https://github.com/jevaldev)
+- LinkedIn [Jesus Valdés Viramontes](www.linkedin.com/in/jesus-valdes-viramontes)
+- GitHub [jevaldev](https://github.com/jevaldev)
