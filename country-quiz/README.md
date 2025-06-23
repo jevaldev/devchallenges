@@ -78,6 +78,10 @@ This application/site was created as a submission to a [DevChallenges](https://d
 
 ## Acknowledgements
 
+https://nextjs.org/docs/pages/getting-started/fonts
+https://restcountries.com/#endpoints-latest-added-enpoint
+https://react.dev/reference/react/useCallback
+
 <!-- This section should list any articles or add-ons/plugins that helps you to complete the project. This is optional but it will help you in the future. For exmpale -->
 
 ## Author

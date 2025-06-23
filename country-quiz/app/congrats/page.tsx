@@ -1,11 +1,10 @@
-import React from "react";
 import Image from "next/image";
 import CongratulationsImage from "../../public/congrats.png";
 
 export default function Congratulations() {
   return (
     <div className="grow-1 flex justify-center items-center">
-      <main className="px-7 py-6 bg-[#393F6E] rounded-2xl">
+      <main className="px-7 py-6 bg-[#343964] rounded-2xl shadow-xl">
         <section className="flex flex-col items-center justify-center w-[340px] gap-2">
           <Image
             src={CongratulationsImage}
@@ -17,7 +16,7 @@ export default function Congratulations() {
             Congrats! You completed the quiz.
           </h1>
           <p className="font-medium text-base">You answer 4/10 correctly</p>
-          <button className="bg-button px-6 py-4 w-8/12 my-9 rounded-xl font-semibold cursor-pointer">
+          <button className="bg-gradient px-6 py-4 w-8/12 my-9 rounded-xl font-semibold cursor-pointer">
             Play again!
           </button>
         </section>
