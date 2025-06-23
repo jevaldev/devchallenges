@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+.bg-button {
+  background-image: linear-gradient(to right, #E65895, #BC6BE8)
+}
+
+body {
+  background-image: url('/bg.jpg') !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #343964;
+  color: var(--foreground);
+  font-family: var(--font-be-vietnam-pro) Arial, Helvetica, sans-serif;
+}
