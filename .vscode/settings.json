@@ -1,5 +1,6 @@
 {
   "conventionalCommits.scopes": [
-    "New Challenge"
+    "New Challenge",
+    "Country Quiz"
   ]
 }

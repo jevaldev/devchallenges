@@ -1,42 +1,40 @@
 import { useState, useEffect, useCallback } from "react";
+import { Country } from "./types/Country";
+import { QuestionType } from "./types/QuestionType";
 
-interface Country {
-  name: {
-    common: string;
-  };
-  currencies: {
-    name: string;
-    symbol: string;
-  };
-  capital: string;
-  languages: [string];
-  borders: [string];
-  flags: {
-    png: string;
-    svg: string;
-    alt: string;
-  };
+export interface QuizQuestion {
+  type: QuestionType;
+  country: Country;
+  options: string[];
 }
 
 export function useQuiz() {
   const [countries, setCountries] = useState<Country[]>([]);
-  const [currentQuestion, setCurrentQuestion] = useState<Country | null>(null);
-  const [options, setOptions] = useState<string[]>([]);
+  const [questions, setQuestions] = useState<QuizQuestion[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     async function fetchCountries() {
-      const response = await fetch(
-        "https://restcountries.com/v3.1/all?limit=10&fields=name,flags,currencies,capital,languages,borders"
+      const res = await fetch(
+        "https://restcountries.com/v3.1/all?fields=name,capital,currencies,languages,flags,borders"
       );
-      const data = await response.json();
+      const data: Country[] = await res.json();
       setCountries(data);
     }
 
     fetchCountries();
   }, []);
 
-  const generateQuestions = useCallback(() => {
-    if (countries.length === 0) return;
+  const generateQuestion = useCallback((): QuizQuestion => {
+    const questionTypes: QuestionType[] = [
+      "flag",
+      "capital",
+      "currency",
+      "language",
+      "borders",
+    ];
+    const type =
+      questionTypes[Math.floor(Math.random() * questionTypes.length)];
 
     const randomIndex = Math.floor(Math.random() * countries.length);
     const selectedCountry = countries[randomIndex];
@@ -51,9 +49,28 @@ export function useQuiz() {
       () => 0.5 - Math.random()
     );
 
-    setCurrentQuestion(selectedCountry);
-    setOptions(answers);
+    return {
+      type,
+      country: selectedCountry,
+      options: answers,
+    };
   }, [countries]);
 
-  return { currentQuestion, options, generateQuestions };
+  const generateQuiz = useCallback(() => {
+    if (countries.length === 0) return;
+    const quiz = Array.from({ length: 10 }, () => generateQuestion());
+    setQuestions(quiz);
+  }, [countries, generateQuestion]);
+
+  function nextQuestion(quizIndex: number) {
+    setCurrentIndex(quizIndex);
+  }
+
+  return {
+    countries,
+    questions,
+    currentIndex,
+    generateQuiz,
+    nextQuestion,
+  };
 }
