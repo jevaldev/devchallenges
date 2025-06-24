@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
+import { QuizProvider } from "./Context/QuizContext";
 
 const beVietnamPro = Be_Vietnam_Pro({
   subsets: ["latin"],
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={beVietnamPro.className}>
       <body className="antialiased flex min-h-svh flex-col items-center justify-center py-4">
-        {children}
+        <QuizProvider>{children}</QuizProvider>
         <footer>
           Coded by{" "}
           <a className="underline" href="https://github.com/jevaldev">

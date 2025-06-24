@@ -1,17 +1,51 @@
 "use client";
-import { useEffect } from "react";
-import Image from "next/image";
-import { useQuiz } from "../useQuiz";
 
-export default function Quiz() {
-  const { questions, currentIndex, generateQuiz, nextQuestion } = useQuiz();
+import { useEffect } from "react";
+import { QuestionTypes } from "../components/questionTypes";
+import { useQuiz } from "../Hooks/useQuiz";
+import QuestionButtons from "../components/questionButtons";
+import { SkeletonQuiz } from "../components/skeletonQuiz";
+import { Answer } from "../types/Answer";
+
+interface Props {
+  answers: Record<number, Answer>;
+  setAnswers: React.Dispatch<React.SetStateAction<Record<number, Answer>>>;
+}
+
+export default function Quiz({ answers, setAnswers }: Props) {
+  const { questions, error, currentIndex, generateQuiz, nextQuestion } =
+    useQuiz();
 
   useEffect(() => {
     generateQuiz();
   }, [generateQuiz]);
 
-  if (questions.length === 0)
-    return <div className="text-white">Loading Quiz...</div>;
+  const handleAnswer = (
+    questionIndex: number,
+    option: string,
+    correctAnswer: string
+  ) => {
+    if (answers[questionIndex]) return;
+    setAnswers((prev) => ({
+      ...prev,
+      [questionIndex]: {
+        selected: option,
+        isCorrect: option === correctAnswer,
+      },
+    }));
+  };
+
+  if (questions.length === 0) return <SkeletonQuiz />;
+
+  if (error) {
+    return (
+      <section className="bg-[#343964] w-full h-[320px] rounded-2xl p-8 shadow-xl flex flex-col gap-6">
+        <h2 className="text-xl font-semibold text-center text-red-500">
+          Error loading questions: <span className="text-white">{error}</span>
+        </h2>
+      </section>
+    );
+  }
 
   const current = questions[currentIndex];
 
@@ -21,7 +55,11 @@ export default function Quiz() {
         {Array.from({ length: 10 }, (_, index) => (
           <li key={index}>
             <button
-              className="bg-[#393F6E] px-4 py-2 rounded-full transition-all duration-300 hover:bg-gradient-to-r hover:from-[#E65895] hover:to-[#BC6BE8] cursor-pointer"
+              className={`px-4 py-2 rounded-full transition-all duration-300 hover:bg-gradient-to-r hover:from-[#E65895] hover:to-[#BC6BE8] cursor-pointer ${
+                currentIndex === index || answers[index]
+                  ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white"
+                  : "bg-[#393F6E] text-white"
+              }`}
               onClick={() => nextQuestion(index)}
             >
               {" "}
@@ -30,60 +68,15 @@ export default function Quiz() {
           </li>
         ))}
       </ul>
-      <h2 className="text-xl font-semibold text-center text-white">
-        {current.type === "flag" && (
-          <>
-            Which country does this flag
-            <Image
-              src={current.country.flags.svg}
-              alt="flag"
-              width={32}
-              height={24}
-              className="inline mx-2"
-            />
-            belong to?
-          </>
-        )}
-        {current.type === "capital" && (
-          <>
-            Which country has {current.country.capital?.[0] || "Unknown"} as its
-            capital?
-          </>
-        )}
-        {current.type === "currency" && (
-          <>
-            What country uses{" "}
-            {Object.values(current.country.currencies || {})[0]?.name ||
-              "Unknown"}{" "}
-            {Object.values(current.country.currencies || {})[0]?.symbol || ""}{" "}
-            as currency?
-          </>
-        )}
-        {current.type === "language" && (
-          <>
-            In which country is{" "}
-            {Object.values(current.country.languages || {})[0] || "Unknown"}{" "}
-            spoken?
-          </>
-        )}
-        {current.type === "borders" && (
-          <>
-            Which country shares borders with{" "}
-            {current.country.borders?.join(", ") || "No borders"}?
-          </>
-        )}
-      </h2>
 
-      <div className="grid grid-cols-2 gap-6">
-        {current.options.map((option, idx) => (
-          <button
-            key={idx}
-            className="bg-[#393F6E] py-4 rounded-xl text-white font-semibold transition-all duration-300 hover:bg-gradient-to-r hover:from-[#E65895] hover:to-[#BC6BE8] cursor-pointer"
-          >
-            {option}
-          </button>
-        ))}
-      </div>
+      <QuestionTypes current={current} />
+
+      <QuestionButtons
+        current={current}
+        questionIndex={currentIndex}
+        selectedAnswer={answers[currentIndex] || null}
+        onAnswer={handleAnswer}
+      />
     </section>
   );
 }

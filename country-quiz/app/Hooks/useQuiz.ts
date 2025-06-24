@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
-import { Country } from "./types/Country";
-import { QuestionType } from "./types/QuestionType";
+import { Country } from "../types/Country";
+import { QuestionType } from "../types/QuestionType";
 
 export interface QuizQuestion {
   type: QuestionType;
@@ -12,14 +12,27 @@ export function useQuiz() {
   const [countries, setCountries] = useState<Country[]>([]);
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchCountries() {
-      const res = await fetch(
-        "https://restcountries.com/v3.1/all?fields=name,capital,currencies,languages,flags,borders"
-      );
-      const data: Country[] = await res.json();
-      setCountries(data);
+      try {
+        setError(null);
+
+        await new Promise((resolve) => setTimeout(resolve, 3000)); // simula 3s de espera
+
+        const res = await fetch(
+          "https://restcountries.com/v3.1/all?fields=name,capital,currencies,languages,flags,borders"
+        );
+
+        if (!res.ok) throw new Error("Error al cargar países");
+
+        const data: Country[] = await res.json();
+        setCountries(data);
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+        setError("Failed to load countries. Please try again later.");
+      }
     }
 
     fetchCountries();
@@ -70,6 +83,7 @@ export function useQuiz() {
     countries,
     questions,
     currentIndex,
+    error,
     generateQuiz,
     nextQuestion,
   };
